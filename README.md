@@ -32,7 +32,7 @@ Upload any `.txt` transcript file → get Summary → Email.
 ✅ Technologies Used:
 - Python
 - Streamlit
-- OpenAI API
+- google-generativeai
 - dotenv
 
 Enjoy building! 🚀
