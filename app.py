@@ -1,92 +1,89 @@
 import streamlit as st
 import google.generativeai as genai
-from dotenv import load_dotenv
 import os
-import base64
-
-# Load environment variables from .env
-load_dotenv()
 
 # Configure Gemini API
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-# Or directly set key if .env not working:
-# genai.configure(api_key="AIzaSyCp***************************GOq4")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Initialize the model
-model = genai.GenerativeModel("gemini-2.5-flash")
-
-# Streamlit App Title
-st.set_page_config(page_title="AI Meeting Summarizer + Email Generator", layout="centered")
-st.title("🧠 AI Meeting Summarizer + Email Generator")
-
-st.markdown(
-    "Upload a **meeting transcript (.txt)** below. "
-    "The tool will generate a **concise summary** and a **draft follow-up email** automatically."
+# Streamlit page setup
+st.set_page_config(
+    page_title="AI Meeting Summarizer + Email Generator",
+    page_icon="🧠",
+    layout="wide"
 )
 
-# File uploader
-uploaded_file = st.file_uploader("📁 Upload meeting transcript", type="txt")
+# --- Header Section: Logo + Title Side by Side ---
+col1, col2 = st.columns([1, 5])
+with col1:
+    st.image("company_logo.png", width=200)  # 👈 Put your logo file here or use a URL
+with col2:
+    st.markdown(
+        """
+        <div style='display: flex; align-items: center; height: 100%;'>
+            <h1 style='margin: 0; padding-left: 10px;'>AI Meeting Summarizer + Email Generator</h1>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+st.markdown("---")
+
+# --- File Upload Section ---
+uploaded_file = st.file_uploader("📤 Upload your meeting transcript (.txt)", type=["txt"])
 
 if uploaded_file is not None:
     transcript = uploaded_file.read().decode("utf-8")
-    st.subheader("🗒️ Meeting Transcript")
-    st.text_area("Transcript:", transcript, height=200)
 
-    if st.button("✨ Generate Summary and Email"):
-        with st.spinner("AI is processing your transcript... please wait ⏳"):
-            # ---------- Improved Prompt for Summary ----------
-            summary_prompt = f"""
-You are an expert meeting summarizer.
-Read the meeting transcript below and create a concise, professional summary (100–150 words) with:
-1. Main agenda or topic
-2. Key points discussed
-3. Decisions made
-4. Action items (who will do what and by when)
+    # --- Show Transcript Preview ---
+    st.markdown("### 📄 Uploaded Transcript")
+    st.markdown(
+        f"<div style='background-color:#F9FAFB;padding:15px;border-radius:10px;border:1px solid #ddd;max-height:300px;overflow-y:auto;white-space:pre-wrap;'>{transcript}</div>",
+        unsafe_allow_html=True
+    )
 
-Transcript:
-{transcript}
-"""
+    # --- Generate AI Summary and Email Draft ---
+    with st.spinner("🧠 Generating summary and follow-up email... please wait..."):
+        prompt = f"""
+        You are an expert meeting summarizer and email writer.
+        Given the meeting transcript below, generate:
+        A professional meeting summary (100–150 words)
+        A well-formatted follow-up email draft with clear next steps.
 
-            summary_response = model.generate_content(summary_prompt)
-            summary = summary_response.text.strip()
+        Transcript:
+        {transcript}
+        """
 
-            # ---------- Improved Prompt for Email ----------
-            email_prompt = f"""
-You are a professional assistant helping to write follow-up emails after meetings.
-Using the meeting transcript below, create a clear, polite, and action-oriented follow-up email with:
-- Subject line
-- Greeting
-- Key updates & next steps in bullet format
-- Call to action if needed
-- Polite closing
+        model = genai.GenerativeModel("gemini-2.5-flash")
+        response = model.generate_content(prompt)
 
-Avoid repeating words or phrases. Keep tone business-friendly and concise.
+    # --- Layout for Output ---
+    st.markdown("### 📝 Summary and Email Draft")
+    st.markdown("---")
 
-Transcript:
-{transcript}
-"""
+    col1, col2 = st.columns(2)
 
-            email_response = model.generate_content(email_prompt)
-            email = email_response.text.strip()
+    with col1:
+        st.subheader("🧾 Meeting Summary")
+        st.markdown(
+            f"<div style='background-color:#F7F9FC;padding:15px;border-radius:10px;border:1px solid #ccc;'>{response.text.split('Follow-up Email')[0]}</div>",
+            unsafe_allow_html=True
+        )
 
-        # ---------- Display Results ----------
-        st.success("✅ Summary and Email Generated Successfully!")
+    with col2:
+        st.subheader("📧 Follow-up Email Draft")
+        st.markdown(
+            f"<div style='background-color:#F7FFF7;padding:15px;border-radius:10px;border:1px solid #ccc;'>{response.text.split('Follow-up Email')[-1]}</div>",
+            unsafe_allow_html=True
+        )
 
-        st.subheader("📝 Meeting Summary")
-        st.write(summary)
-
-        st.subheader("✉️ Follow-up Email Draft")
-        st.write(email)
-
-        # ---------- Download Buttons ----------
-        def download_button(label, text, file_name):
-            b64 = base64.b64encode(text.encode()).decode()
-            href = f'<a href="data:file/txt;base64,{b64}" download="{file_name}">{label}</a>'
-            st.markdown(href, unsafe_allow_html=True)
-
-        st.markdown("### 📥 Download Options")
-        download_button("⬇️ Download Summary", summary, "meeting_summary.txt")
-        download_button("⬇️ Download Email", email, "followup_email.txt")
+    # --- Download Button ---
+    download_text = f"Meeting Transcript:\n\n{transcript}\n\n{response.text}"
+    st.download_button(
+        label="⬇️ Download Summary & Email",
+        data=download_text,
+        file_name="meeting_summary_email.txt",
+        mime="text/plain"
+    )
 
 else:
-    st.info("👆 Please upload a transcript file to begin.")
+    st.info("📄 Please upload a meeting transcript file to generate summary and email.")
