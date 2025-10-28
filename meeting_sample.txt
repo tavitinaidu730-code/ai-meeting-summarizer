@@ -1,0 +1,5 @@
+John: Welcome everyone. Today we’ll discuss project timelines and blockers.
+Mary: The frontend is 80% complete, backend integration is pending.
+Rahul: Testing needs to start next week to stay on schedule.
+Priya: I’ll send the updated project plan by EOD tomorrow.
+John: Great, let’s ensure communication with the client about the timeline adjustments.
