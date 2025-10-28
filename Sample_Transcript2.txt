@@ -1,0 +1,42 @@
+John: Good morning, everyone. Let’s get started with our weekly project update.
+Mary: Morning, John. The frontend module for the dashboard is now 90% complete. Just a few UI adjustments left.
+Rahul: On the backend side, we’ve integrated the authentication service and started testing the API endpoints.
+Priya: The QA team has started preparing the test cases for phase one. We plan to begin testing by Wednesday.
+John: That’s great to hear. Mary, have you reviewed the client feedback from last week?
+Mary: Yes, they wanted to change the color palette slightly and requested the addition of a data export option.
+John: Perfect. Please include that in this sprint’s final release.
+Rahul: I’ll make sure the export API supports CSV and Excel formats.
+Priya: Testing for that feature will also be added to the QA checklist.
+John: Excellent. How about deployment preparation? Any blockers there?
+Mary: We’re waiting for approval from DevOps to access the staging server.
+Rahul: I’ll coordinate with DevOps today to get that done.
+John: Thanks, Rahul. Priya, any concerns from QA?
+Priya: None so far. We just need the final build by Wednesday to stay on track.
+John: Noted. Let's make sure that happens. Any updates on client communication?
+Mary: I had a quick sync with the client yesterday. They’re happy with the current progress but expect a demo on Friday.
+John: Good. We’ll prepare the demo slides by Thursday evening.
+Rahul: Should we include API performance stats in the demo?
+John: Yes, include the key response time improvements compared to the last sprint.
+Priya: I can share the initial test metrics with Mary to include in the demo.
+Mary: Great, I’ll format them and add to the slide deck.
+John: Perfect teamwork. Anything pending for budget updates?
+Rahul: Finance team shared the cost summary, and we are still within the approved limit.
+John: That’s a relief. Any new risks we should track?
+Priya: Just the staging access delay, but Rahul’s already handling that.
+Mary: Also, we might need two more days for cross-browser testing.
+John: Okay, that’s manageable. Please update the project plan accordingly.
+Rahul: Will do. Also, a reminder — next sprint planning is scheduled for Monday morning.
+Priya: Got it. I’ll prepare the QA metrics for that session.
+Mary: I’ll finalize the UI design report by then as well.
+John: Fantastic. Let’s quickly recap our action items.
+John: Mary, you’ll finish the remaining UI adjustments and prepare the demo slides.
+Mary: Yes, by Thursday evening.
+John: Rahul, you’ll coordinate with DevOps and add export API support.
+Rahul: Confirmed.
+John: Priya, you’ll finalize the test cases and prepare QA metrics.
+Priya: Done.
+John: Great teamwork, everyone. We’re moving in the right direction.
+Mary: Thanks, John.
+Rahul: Have a great day, everyone.
+Priya: Bye!
+John: Meeting adjourned.
