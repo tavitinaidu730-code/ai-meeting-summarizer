@@ -29,10 +29,15 @@ Upload any `.txt` transcript file → get Summary → Email.
 
 ---
 
-✅ Technologies Used:
-- Python
-- Streamlit
-- OpenAI API
-- dotenv
+# ✅ Technologies Used:
+
+| Component       | Technology Used                                   |
+| --------------- | ------------------------------------------------- |
+| Frontend UI     | Streamlit                                         |
+| Backend Logic   | Python                                            |
+| AI Model        | Google Gemini (via `google-generativeai` package) |
+| Hosting         | Render                                            |
+| Version Control | Git + GitHub                                      |
+| Language        | Python 3.10+                                      |
 
 Enjoy building! 🚀
